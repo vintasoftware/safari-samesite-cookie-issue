@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken')
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $(document).ready(function () {
+            $('#form').on('submit', function(e) {
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr("action"),
+                    data: $(this).serialize(), 
+                }).done(function (_, textStatus, _) {
+                    alert(textStatus);
+                }).fail(function (jqXHR, textStatus, _) {
+                    alert(textStatus + ' ' + jqXHR.status)
+                });
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+    {% csrf_token %}
+
+    request.META['CSRF_COOKIE']: {{ CSRF_COOKIE }} <br>
+    CSRF cookie (from JS): <script type="text/javascript">document.write(csrftoken);</script> <br>
+    <br>
+    <form id="form" action="" method="POST">
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html>
