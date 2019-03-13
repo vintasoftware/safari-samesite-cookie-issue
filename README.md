@@ -1,6 +1,6 @@
 # Safari Samesite cookies issue (Webkit Bug 188165)
 
-Safari 12 on iOS and Mac OS X doesn't send cookies nor allow JS to read cookies set on response if the request is made by a cross-site redirection. As of March 13, 2019, [this issue is still open](https://bugs.webkit.org/show_bug.cgi?id=188165). This Django 2.1 app reproduces this problem consistently.
+Safari 12 on iOS and Mac OS X doesn't send cookies nor allow JS to read cookies set on response if the request is made by a cross-site redirection. As of March 13, 2019, [this issue is still open](https://bugs.webkit.org/show_bug.cgi?id=188165). This Django 2.1 app reproduces this problem consistently. A [ticket](https://code.djangoproject.com/ticket/30250) has also been created on Django to suggest a default of no samesite for both CSRF and Session cookies.
 
 ## Steps to Reproduce
 
