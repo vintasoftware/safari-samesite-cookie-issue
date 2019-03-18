@@ -56,6 +56,9 @@
 <body>
     {% csrf_token %}
 
+    request.session.session_key: {{ request.session.session_key }} <br>
+    request.session['obj']: {{ obj }} <br>
+    <br>
     request.META['CSRF_COOKIE']: {{ CSRF_COOKIE }} <br>
     CSRF cookie (from JS): <script type="text/javascript">document.write(csrftoken);</script> <br>
     <br>
