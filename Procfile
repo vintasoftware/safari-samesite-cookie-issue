@@ -1,0 +1,1 @@
+web: gunicorn safari_samesite_issue.wsgi sync --log-file -
