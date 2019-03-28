@@ -1,11 +1,12 @@
-from django.views.generic.base import RedirectView, TemplateView, View
-from django.http import JsonResponse
-
 import uuid
+
+from django.conf import settings
+from django.http import JsonResponse
+from django.views.generic.base import RedirectView, TemplateView, View
 
 
 class OtherOriginRedirectView(RedirectView):
-    url = 'http://localhost:8000/target/'
+    url = settings.REDIRECT_TARGET_URL
 
 
 class TargetView(TemplateView):
